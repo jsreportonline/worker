@@ -2,8 +2,8 @@ FROM jsreport/jsreport-worker
 
 # phantomjs and electron
 RUN apt-get update && \
-    apt-get install -y libgtk2.0-dev libxtst-dev libxss1 libgconf2-dev libnss3-dev libasound2-dev libnotify4 xvfb dbus-x11 && \
-    apt-get install -y libxrender1 libfontconfig libxext6 fonts-dejavu-core fonts-dejavu-extra fonts-droid-fallback fonts-guru fonts-guru-extra fonts-horai-umefont fonts-kacst fonts-kacst-one fonts-khmeros-core fonts-lao fonts-liberation fonts-lklug-sinhala fonts-lohit-guru fonts-nanum fonts-noto-cjk fonts-opensymbol fonts-roboto fonts-roboto-hinted fonts-sil-abyssinica fonts-sil-padauk fonts-stix fonts-symbola fonts-takao-pgothic fonts-thai-tlwg fonts-tibetan-machine fonts-tlwg-garuda fonts-tlwg-kinnari fonts-tlwg-laksaman fonts-tlwg-loma fonts-tlwg-mono fonts-tlwg-norasi fonts-tlwg-purisa fonts-tlwg-sawasdee fonts-tlwg-typewriter fonts-tlwg-typist fonts-tlwg-typo fonts-tlwg-umpush fonts-tlwg-waree fonts-unfonts-core fonts-ipafont-gothic fonts-wqy-zenhei && \
+    apt-get install -y bzip2 libgtk2.0-dev libxtst-dev libxss1 libgconf2-dev libnss3-dev libasound2-dev libnotify4 libxrender1 libxext6 xvfb dbus-x11 && \
+    apt-get install -y libfontconfig fonts-dejavu-core fonts-dejavu-extra fonts-droid-fallback fonts-tlwg-garuda fonts-tlwg-kinnari fonts-tlwg-laksaman fonts-tlwg-loma fonts-tlwg-mono fonts-tlwg-norasi fonts-tlwg-purisa fonts-tlwg-sawasdee fonts-tlwg-typewriter fonts-tlwg-typist fonts-tlwg-typo fonts-tlwg-umpush fonts-tlwg-waree && \
     curl -Lo phantomjs.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 && \
     tar jxvf phantomjs.tar.bz2 && \
     chmod +x phantomjs-1.9.8-linux-x86_64/bin/phantomjs && \
@@ -25,7 +25,7 @@ RUN npm install jsreport-ejs@2.0.0 \
     jsreport-pug@3.0.0 \
     phantomjs-exact-2-1-1@0.1.0 \
     jsreport-phantom-pdf@2.0.2 \
-    electron@1.6.1 \
+    electron@1.8.7 \
     jsreport-electron-pdf@3.0.0 \
     jsreport-wkhtmltopdf@2.0.3 \
     jsreport-fop-pdf@2.0.0
@@ -38,6 +38,7 @@ COPY ./bootstrap/* /app/bootstrap
 
 ENV electron_strategy electron-ipc
 ENV phantom_strategy phantom-server
+
 ENV DISPLAY :99
 
 # startup script to launch dbus and xvfb correctly along with our app:

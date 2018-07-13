@@ -30,6 +30,9 @@ RUN npm install jsreport-ejs@2.0.0 \
     jsreport-wkhtmltopdf@2.0.3 \
     jsreport-fop-pdf@2.0.0
 
+# dependencies used in code
+RUN npm install request@2.87.0 stream-to-array@2.3.0
+
 RUN npm cache clean -f && \
     rm -rf /tmp/*
 

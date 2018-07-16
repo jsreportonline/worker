@@ -206,7 +206,7 @@ module.exports = ({ processor, options }) => {
         req.template.phantom[windowsWorkerUrlKey] = req.context.windowsWorker.url
       }
 
-      return workerRequest.process(executeRecipe(data).then((result) => {
+      return workerRequest.process(() => executeRecipe(data).then((result) => {
         if (recipe === 'wkhtmltopdf') {
           delete req.template.wkhtmltopdf[windowsWorkerUrlKey]
         } else {

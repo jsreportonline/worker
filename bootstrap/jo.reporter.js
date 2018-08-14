@@ -182,7 +182,7 @@ module.exports = ({ processor, options }) => {
     }
   })
 
-  processor.addExecuteListener('jo', ({ type, workerRequest, executeRecipe, data }) => {
+  processor.addExecuteListener('jo', ({ type, workerRequest, httpReq, executeRecipe, data }) => {
     if (type !== 'recipe') {
       return
     }
@@ -206,7 +206,7 @@ module.exports = ({ processor, options }) => {
         req.template.phantom[windowsWorkerUrlKey] = req.context.windowsWorker.url
       }
 
-      return workerRequest.process(() => executeRecipe(data).then((result) => {
+      return workerRequest.process(httpReq, () => executeRecipe(data).then((result) => {
         if (recipe === 'wkhtmltopdf') {
           delete req.template.wkhtmltopdf[windowsWorkerUrlKey]
         } else {

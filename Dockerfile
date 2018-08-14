@@ -31,7 +31,9 @@ RUN npm install jsreport-ejs@2.0.0 \
     jsreport-fop-pdf@2.0.0 --save
 
 # dependencies used in code
-RUN npm install request@2.87.0 stream-to-array@2.3.0
+# (request and moment are needed as part of support for allowed modules
+# inside scripts, helpers)
+RUN npm install request@2.87.0 moment@2.22.2 stream-to-array@2.3.0
 
 RUN npm cache clean -f && \
     rm -rf /tmp/*
@@ -62,4 +64,6 @@ ENV DISPLAY :99
 #   in case that errors from xvfb needs to be printed to stdout for debugging purposes just pass -e /dev/stdout option (xvfb-run -e /dev/stdout .......)
 #   the important part of this command is the -ac option in --server-args, -ac disables host-based access control mechanisms in Xvfb server,
 #   which prevents the connection to the Xvfb server from our app
-CMD rm -f /tmp/.X*lock && rm -rfd /tmp/xvfb-run* && xvfb-run --server-num=99 --server-args='-screen 0 1024x768x24 -ac' node server.js
+# CMD rm -f /tmp/.X*lock && rm -rfd /tmp/xvfb-run* && xvfb-run --server-num=99 --server-args='-screen 0 1024x768x24 -ac' node server.js
+
+CMD rm -f /tmp/.X*lock && rm -rfd /tmp/xvfb-run* && xvfb-run --server-num=99 --server-args='-screen 0 1024x768x24 -ac' node --inspect=0.0.0.0:9229 server.js

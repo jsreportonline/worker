@@ -21,13 +21,13 @@ RUN apt-get update && \
 
 ENV PATH "$PATH:/app/fop-2.1"
 
-RUN npm install jsreport-ejs@2.0.0 \
+RUN npm install jsreport-ejs@2.0.1 \
     jsreport-pug@3.0.0 \
     phantomjs-exact-2-1-1@0.1.0 \
-    jsreport-phantom-pdf@2.1.3 \
+    jsreport-phantom-pdf@2.1.4 \
     electron@1.8.7 \
     jsreport-electron-pdf@3.0.0 \
-    jsreport-wkhtmltopdf@2.0.3 \
+    jsreport-wkhtmltopdf@2.0.4 \
     jsreport-fop-pdf@2.0.0 --save
 
 # dependencies used in code

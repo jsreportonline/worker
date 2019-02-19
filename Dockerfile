@@ -1,4 +1,4 @@
-FROM jsreport/jsreport-worker:0.3.8
+FROM jsreport/worker:0.4.0
 
 # phantomjs and electron
 RUN apt-get update && \
@@ -64,4 +64,8 @@ ENV DISPLAY :99
 #   in case that errors from xvfb needs to be printed to stdout for debugging purposes just pass -e /dev/stdout option (xvfb-run -e /dev/stdout .......)
 #   the important part of this command is the -ac option in --server-args, -ac disables host-based access control mechanisms in Xvfb server,
 #   which prevents the connection to the Xvfb server from our app
+
 CMD rm -f /tmp/.X*lock && rm -rfd /tmp/xvfb-run* && xvfb-run --server-num=99 --server-args='-screen 0 1024x768x24 -ac' node server.js
+
+# debugging
+# CMD rm -f /tmp/.X*lock && rm -rfd /tmp/xvfb-run* && xvfb-run --server-num=99 --server-args='-screen 0 1024x768x24 -ac' node --inspect-brk=0.0.0.0:9229 server.js

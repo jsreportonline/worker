@@ -33,7 +33,7 @@ RUN npm install jsreport-ejs@2.2.0 \
 # dependencies used in code
 # (request and moment are needed as part of support for allowed modules
 # inside scripts, helpers)
-RUN npm install request@2.87.0 moment@2.22.2 stream-to-array@2.3.0
+RUN npm install request@2.87.0 moment@2.22.2 underscore@1.9.1 stream-to-array@2.3.0
 
 RUN npm cache clean -f && \
     rm -rf /tmp/*

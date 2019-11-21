@@ -35,6 +35,9 @@ RUN npm install jsreport-ejs@2.2.0 \
 # inside scripts, helpers)
 RUN npm install request@2.87.0 moment@2.22.2 underscore@1.9.1 stream-to-array@2.3.0
 
+# install icu data for node, this will make the worker to be able to use Intl api in full
+RUN npm install full-icu@1.3.0
+
 RUN npm cache clean -f && \
     rm -rf /tmp/*
 
@@ -65,7 +68,4 @@ ENV DISPLAY :99
 #   the important part of this command is the -ac option in --server-args, -ac disables host-based access control mechanisms in Xvfb server,
 #   which prevents the connection to the Xvfb server from our app
 
-CMD rm -f /tmp/.X*lock && rm -rfd /tmp/xvfb-run* && xvfb-run --server-num=99 --server-args='-screen 0 1024x768x24 -ac' node server.js
-
-# debugging
-# CMD rm -f /tmp/.X*lock && rm -rfd /tmp/xvfb-run* && xvfb-run --server-num=99 --server-args='-screen 0 1024x768x24 -ac' node --inspect-brk=0.0.0.0:9229 server.js
+CMD rm -f /tmp/.X*lock && rm -rfd /tmp/xvfb-run* && xvfb-run --server-num=99 --server-args='-screen 0 1024x768x24 -ac' node --icu-data-dir=./node_modules/full-icu server.js

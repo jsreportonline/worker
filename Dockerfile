@@ -1,5 +1,7 @@
 FROM jsreport/jsreport-worker:0.6.0
 
+USER root
+
 # phantomjs and electron
 RUN apt-get update && \
     apt-get install -y bzip2 libgtk2.0-dev libxtst-dev libxss1 libgconf2-dev libnss3-dev libasound2-dev libnotify4 libxrender1 libxext6 xvfb dbus-x11 && \
@@ -11,24 +13,33 @@ RUN apt-get update && \
     rm -rf phantomjs* && \
     # java fop
     apt-get install -y default-jre unzip && \
-    curl -o fop.zip apache.miloslavbrada.cz/xmlgraphics/fop/binaries/fop-2.1-bin.zip && \
+    curl -o fop.zip archive.apache.org/dist/xmlgraphics/fop/binaries/fop-2.1-bin.zip && \
     unzip fop.zip && \
     rm fop.zip && \
     chmod +x fop-2.1/fop && \
     # cleanup
     rm -rf /var/lib/apt/lists/* /var/cache/apt/* && \
-    rm -rf /src/*.deb
+    rm -rf /src/*.deb && \
+    rm -rf /tmp/*
+
+USER jsreport:jsreport
 
 ENV PATH "$PATH:/app/fop-2.1"
+
+# include temporary patches
+RUN npm install jsreport/jsreport-core#441e3b5384a716e3d6ce7eacc28cb93a56479719 \
+    jsreport/jsreport-templates#d9b1f63d0af9bef4c3992e9fc98940d6bf2719c0 \
+    jsreport/jsreport-assets#03aa1eaacbfb424e014a22e33cc6e35e0282e5e5 \
+    jsreport/jsreport-child-templates#926d2ec5afb461bc41526e55a08b8d9a6d6bbd9a
 
 RUN npm install jsreport-ejs@2.2.0 \
     jsreport-pug@3.1.0 \
     phantomjs-exact-2-1-1@0.1.0 \
-    jsreport-phantom-pdf@2.4.2 \
+    jsreport-phantom-pdf@2.5.1 \
     electron@1.8.7 \
-    jsreport-electron-pdf@3.0.0 \
-    jsreport-wkhtmltopdf@2.1.1 \
-    jsreport-fop-pdf@2.1.1 --save
+    jsreport-electron-pdf@3.1.0 \
+    jsreport-wkhtmltopdf@2.2.0 \
+    jsreport-fop-pdf@2.2.0 --save
 
 # dependencies used in code
 # (request and moment are needed as part of support for allowed modules
@@ -41,8 +52,8 @@ RUN npm install full-icu@1.3.0
 RUN npm cache clean -f && \
     rm -rf /tmp/*
 
-COPY ./jo.reporter.json /app
-COPY ./bootstrap/* /app/bootstrap
+COPY --chown=jsreport:jsreport ./jo.reporter.json /app
+COPY --chown=jsreport:jsreport ./bootstrap/* /app/bootstrap
 
 ENV electron_strategy electron-ipc
 ENV phantom_strategy phantom-server
@@ -67,5 +78,7 @@ ENV DISPLAY :99
 #   in case that errors from xvfb needs to be printed to stdout for debugging purposes just pass -e /dev/stdout option (xvfb-run -e /dev/stdout .......)
 #   the important part of this command is the -ac option in --server-args, -ac disables host-based access control mechanisms in Xvfb server,
 #   which prevents the connection to the Xvfb server from our app
+
+USER root
 
 CMD rm -f /tmp/.X*lock && rm -rfd /tmp/xvfb-run* && xvfb-run --server-num=99 --server-args='-screen 0 1024x768x24 -ac' node --icu-data-dir=./node_modules/full-icu server.js

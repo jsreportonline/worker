@@ -1,4 +1,4 @@
-FROM jsreport/jsreport-worker:0.8.0
+FROM jsreport/jsreport-worker
 
 USER root
 
@@ -26,20 +26,13 @@ USER jsreport:jsreport
 
 ENV PATH "$PATH:/app/fop-2.1"
 
-# include temporary patches
-RUN npm install jsreport/jsreport-core#441e3b5384a716e3d6ce7eacc28cb93a56479719 \
-    jsreport/jsreport-templates#d9b1f63d0af9bef4c3992e9fc98940d6bf2719c0 \
-    jsreport/jsreport-assets#03aa1eaacbfb424e014a22e33cc6e35e0282e5e5 \
-    jsreport/jsreport-child-templates#926d2ec5afb461bc41526e55a08b8d9a6d6bbd9a \
-    jsreport/jsreport-version-control#940b8dddcd49ce4c4a8791dc28c8991edc6d11eb
-
 RUN npm install jsreport-ejs@2.2.0 \
     jsreport-pug@3.1.0 \
     phantomjs-exact-2-1-1@0.1.0 \
-    jsreport-phantom-pdf@2.5.1 \
+    jsreport-phantom-pdf@2.6.1 \
     electron@1.8.7 \
-    jsreport-electron-pdf@3.1.0 \
-    jsreport-wkhtmltopdf@2.2.0 \
+    jsreport-electron-pdf@3.2.0 \
+    jsreport-wkhtmltopdf@2.3.0 \
     jsreport-fop-pdf@2.2.0 --save
 
 # dependencies used in code

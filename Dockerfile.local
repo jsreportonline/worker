@@ -1,4 +1,4 @@
-FROM jsreport/worker
+FROM jsreport/worker:local
 USER root
 
 # phantomjs and electron
@@ -25,25 +25,26 @@ USER jsreport:jsreport
 
 # ENV PATH "$PATH:/app/fop-2.1"
 
-RUN npm install @jsreport/jsreport-ejs@3.0.0 \
-    @jsreport/jsreport-pug@4.0.0 \
-    @jsreport/jsreport-electron-pdf@4.0.1 \
-    @jsreport/jsreport-wkhtmltopdf@3.0.2 \
-    @jsreport/jsreport-phantom-pdf@3.0.2 \
-    # jsreport-fop-pdf@2.2.0 \
-    phantomjs-exact-2-1-1@0.1.0 \
-    electron@1.8.7 --save
+RUN yarn add --ignore-workspace-root-check phantomjs-exact-2-1-1@0.1.0 \
+    electron@1.8.7
 
 # dependencies used in code
 # (request and moment are needed as part of support for allowed modules
 # inside scripts, helpers)
-RUN npm install request@2.88.2 moment@2.29.3 underscore@1.13.3
+RUN yarn add --ignore-workspace-root-check request@2.88.2 moment@2.29.3 underscore@1.13.3
 
-RUN npm cache clean -f && \
-    rm -rf /tmp/*
+RUN yarn cache clean --all && rm -rf /tmp/*
 
 ENV electron_strategy electron-ipc
 ENV phantom_strategy phantom-server
+
+# extensions from packages should already be there in the jsreport/worker image
+# we just need to define the env var locations for the rest of extensions
+ENV extensions_ejs /app/packages/jsreport-ejs
+ENV extensions_pug /app/packages/jsreport-pug
+ENV extensions_electronPdf /app/packages/jsreport-electron-pdf
+ENV extensions_wkhtmltopdf /app/packages/jsreport-wkhtmltopdf
+ENV extensions_phantomPdf /app/packages/jsreport-phantom-pdf
 
 ENV DISPLAY :99
 
@@ -69,4 +70,3 @@ USER root
 #   which prevents the connection to the Xvfb server from our app
 
 CMD rm -f /tmp/.X*lock && rm -rfd /tmp/xvfb-run* && xvfb-run --server-num=99 --server-args='-screen 0 1024x768x24 -ac' node server.js
-

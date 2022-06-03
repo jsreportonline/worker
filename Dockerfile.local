@@ -25,6 +25,8 @@ USER jsreport:jsreport
 
 # ENV PATH "$PATH:/app/fop-2.1"
 
+COPY --chown=jsreport:jsreport jo /app/jo
+
 RUN yarn add --ignore-workspace-root-check phantomjs-exact-2-1-1@0.1.0 \
     electron@1.8.7
 
@@ -45,6 +47,7 @@ ENV extensions_pug /app/packages/jsreport-pug
 ENV extensions_electronPdf /app/packages/jsreport-electron-pdf
 ENV extensions_wkhtmltopdf /app/packages/jsreport-wkhtmltopdf
 ENV extensions_phantomPdf /app/packages/jsreport-phantom-pdf
+ENV extensions_jo /app/jo
 
 ENV DISPLAY :99
 

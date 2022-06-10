@@ -44,9 +44,6 @@ RUN npm install request@2.88.2 moment@2.29.3 underscore@1.13.3
 RUN npm cache clean -f && \
     rm -rf /tmp/*
 
-ENV electron_strategy electron-ipc
-ENV phantom_strategy phantom-server
-
 ENV extensions_jo /app/jo
 
 ENV DISPLAY :99

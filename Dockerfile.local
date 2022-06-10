@@ -37,9 +37,6 @@ RUN yarn add --ignore-workspace-root-check request@2.88.2 moment@2.29.3 undersco
 
 RUN yarn cache clean --all && rm -rf /tmp/*
 
-ENV electron_strategy electron-ipc
-ENV phantom_strategy phantom-server
-
 # extensions from packages should already be there in the jsreport/worker image
 # we just need to define the env var locations for the rest of extensions
 ENV extensions_ejs /app/packages/jsreport-ejs

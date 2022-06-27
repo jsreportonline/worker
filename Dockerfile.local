@@ -26,6 +26,7 @@ USER jsreport:jsreport
 # ENV PATH "$PATH:/app/fop-2.1"
 
 COPY --chown=jsreport:jsreport jo /app/jo
+COPY --chown=jsreport:jsreport ./bootstrap/* /app/bootstrap
 
 RUN yarn add --ignore-workspace-root-check phantomjs-exact-2-1-1@0.1.0 \
     electron@1.8.7

@@ -26,6 +26,7 @@ USER jsreport:jsreport
 # ENV PATH "$PATH:/app/fop-2.1"
 
 COPY --chown=jsreport:jsreport jo /app/jo
+COPY --chown=jsreport:jsreport ./bootstrap/* /app/bootstrap
 
 RUN npm install @jsreport/jsreport-ejs@3.0.0 \
     @jsreport/jsreport-pug@4.0.0 \

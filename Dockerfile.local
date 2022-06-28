@@ -10,20 +10,12 @@ RUN apt-get update && \
     chmod +x phantomjs-1.9.8-linux-x86_64/bin/phantomjs && \
     mv phantomjs-1.9.8-linux-x86_64/bin/phantomjs /usr/local/bin/ && \
     rm -rf phantomjs* && \
-    # java fop
-    # apt-get install -y default-jre unzip && \
-    # curl -o fop.zip archive.apache.org/dist/xmlgraphics/fop/binaries/fop-2.1-bin.zip && \
-    # unzip fop.zip && \
-    # rm fop.zip && \
-    # chmod +x fop-2.1/fop && \
     # cleanup
     rm -rf /var/lib/apt/lists/* /var/cache/apt/* && \
     rm -rf /src/*.deb && \
     rm -rf /tmp/*
 
 USER jsreport:jsreport
-
-# ENV PATH "$PATH:/app/fop-2.1"
 
 COPY --chown=jsreport:jsreport jo /app/jo
 COPY --chown=jsreport:jsreport ./bootstrap/* /app/bootstrap

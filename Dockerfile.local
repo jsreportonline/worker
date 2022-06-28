@@ -28,6 +28,9 @@ RUN yarn add --ignore-workspace-root-check phantomjs-exact-2-1-1@0.1.0 \
 # inside scripts, helpers)
 RUN yarn add --ignore-workspace-root-check request@2.88.2 moment@2.29.3 underscore@1.13.3
 
+# workaround for wkhtmltopdf installation not running from Dockerfile.local of jsreport/worker
+RUN node /app/node_modules/wkhtmltopdf-installer/lib/install.js
+
 RUN yarn cache clean --all && rm -rf /tmp/*
 
 # extensions from packages should already be there in the jsreport/worker image

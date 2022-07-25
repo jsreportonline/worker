@@ -1,10 +1,22 @@
+const creditCount = require('./creditCount')
+const quotaMeasure = require('./quotaMeasure')
 
 module.exports = (reporter, definition) => {
   reporter.addRequestContextMetaConfig('tenant', { sandboxHidden: true })
   reporter.addRequestContextMetaConfig('user', { sandboxHidden: true })
 
-  reporter.addRequestContextMetaConfig('startTime', { sandboxReadOnly: true })
   reporter.addRequestContextMetaConfig('throttled', { sandboxHidden: true })
+
+  reporter.addRequestContextMetaConfig('joMeasureStartTime', { sandboxHidden: true })
+
+  creditCount(reporter)
+  quotaMeasure(reporter)
+
+  reporter.initializeListeners.add('joworker', () => {
+    reporter.beforeRenderListeners.insert(0, 'creditCount', (req, res) => {
+      req.context.joMeasureStartTime = new Date().getTime()
+    })
+  })
 
   reporter.beforeRenderListeners.insert({ before: 'scripts' }, 'back-compatibility-before-script-run', (req, res) => {
     if (req.context.isChildRequest != null) {

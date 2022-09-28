@@ -20,12 +20,13 @@ USER jsreport:jsreport
 COPY --chown=jsreport:jsreport jo /app/jo
 COPY --chown=jsreport:jsreport ./bootstrap/* /app/bootstrap
 
+COPY --chown=jsreport:jsreport patch /app
+
 RUN npm install @jsreport/jsreport-ejs@3.0.0 \
     @jsreport/jsreport-pug@4.0.0 \
     @jsreport/jsreport-electron-pdf@4.1.0 \
     @jsreport/jsreport-wkhtmltopdf@3.0.3 \
     @jsreport/jsreport-phantom-pdf@3.0.3 \
-    # jsreport-fop-pdf@2.2.0 \
     phantomjs-exact-2-1-1@0.1.0 \
     electron@1.8.7 --save
 

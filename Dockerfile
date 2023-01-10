@@ -3,6 +3,8 @@ USER root
 
 # phantomjs and electron
 RUN apt-get update && \
+    add-apt-repository ppa:litenstein/libicu60-xenial && \
+    apt-get update && \
     apt-get install -y bzip2 libgtk2.0-dev libxtst-dev libxss1 libgconf2-dev libnss3-dev libasound2-dev libnotify4 libxrender1 libxext6 xvfb dbus-x11 && \
     apt-get install -y libfontconfig fonts-dejavu-core fonts-dejavu-extra fonts-droid-fallback fonts-tlwg-garuda fonts-tlwg-kinnari fonts-tlwg-laksaman fonts-tlwg-loma fonts-tlwg-mono fonts-tlwg-norasi fonts-tlwg-purisa fonts-tlwg-sawasdee fonts-tlwg-typewriter fonts-tlwg-typist fonts-tlwg-typo fonts-tlwg-umpush fonts-tlwg-waree && \
     curl -Lo phantomjs.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 && \
@@ -24,9 +26,9 @@ COPY --chown=jsreport:jsreport patch /app
 
 RUN npm install @jsreport/jsreport-ejs@3.0.0 \
     @jsreport/jsreport-pug@4.0.0 \
-    @jsreport/jsreport-electron-pdf@4.1.0 \
-    @jsreport/jsreport-wkhtmltopdf@3.0.3 \
-    @jsreport/jsreport-phantom-pdf@3.0.3 \
+    @jsreport/jsreport-electron-pdf@4.2.0 \
+    @jsreport/jsreport-wkhtmltopdf@3.2.0 \
+    @jsreport/jsreport-phantom-pdf@3.2.0 \
     phantomjs-exact-2-1-1@0.1.0 \
     electron@1.8.7 --save
 

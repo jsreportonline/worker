@@ -1,4 +1,4 @@
-FROM jsreport/worker:3.7.0
+FROM jsreport/worker:3.10.1
 USER root
 
 # phantomjs and electron

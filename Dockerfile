@@ -1,4 +1,4 @@
-FROM jsreport/worker:3.10.1
+FROM jsreport/worker:3.11.0
 USER root
 
 # phantomjs and electron
@@ -24,7 +24,7 @@ COPY --chown=jsreport:jsreport ./bootstrap/* /app/bootstrap
 
 COPY --chown=jsreport:jsreport patch /app
 
-RUN npm install @jsreport/jsreport-ejs@3.0.0 \
+RUN npm install @jsreport/jsreport-ejs@3.0.1 \
     @jsreport/jsreport-pug@4.0.0 \
     @jsreport/jsreport-electron-pdf@4.2.0 \
     @jsreport/jsreport-wkhtmltopdf@3.2.0 \

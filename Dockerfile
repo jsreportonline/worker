@@ -34,7 +34,7 @@ RUN npm install @jsreport/jsreport-ejs@3.0.1 \
     @jsreport/jsreport-pug@4.0.0 \
     @jsreport/jsreport-electron-pdf@4.2.0 \
     @jsreport/jsreport-wkhtmltopdf@3.2.0 \
-    @jsreport/jsreport-phantom-pdf@3.3.0 \
+    @jsreport/jsreport-phantom-pdf@3.3.1 \
     phantomjs-exact-2-1-1@0.1.0 \
     electron@1.8.7 --save
 

@@ -28,13 +28,11 @@ USER jsreport:jsreport
 COPY --chown=jsreport:jsreport jo /app/jo
 COPY --chown=jsreport:jsreport ./bootstrap/* /app/bootstrap
 
-COPY --chown=jsreport:jsreport patch /app
-
-RUN npm install @jsreport/jsreport-ejs@3.0.1 \
-    @jsreport/jsreport-pug@4.0.0 \
-    @jsreport/jsreport-electron-pdf@4.2.0 \
-    @jsreport/jsreport-wkhtmltopdf@3.2.0 \
-    @jsreport/jsreport-phantom-pdf@3.3.2 \
+RUN npm install @jsreport/jsreport-ejs@4.0.0 \
+    @jsreport/jsreport-pug@5.0.0 \
+    @jsreport/jsreport-electron-pdf@5.0.0 \
+    @jsreport/jsreport-wkhtmltopdf@4.0.0 \
+    @jsreport/jsreport-phantom-pdf@4.0.0 \
     phantomjs-exact-2-1-1@0.1.0 \
     electron@1.8.7 --save
 
@@ -42,6 +40,8 @@ RUN npm install @jsreport/jsreport-ejs@3.0.1 \
 # (request and moment are needed as part of support for allowed modules
 # inside scripts, helpers)
 RUN npm install request@2.88.2 moment@2.29.3 underscore@1.13.3
+
+COPY --chown=jsreport:jsreport patch /app
 
 RUN npm cache clean -f && \
     rm -rf /tmp/*

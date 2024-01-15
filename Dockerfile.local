@@ -28,6 +28,8 @@ USER jsreport:jsreport
 COPY --chown=jsreport:jsreport jo /app/jo
 COPY --chown=jsreport:jsreport ./bootstrap/* /app/bootstrap
 
+RUN yarn install
+
 RUN yarn add --ignore-workspace-root-check phantomjs-exact-2-1-1@0.1.0 \
     electron@1.8.7
 
@@ -38,6 +40,10 @@ RUN yarn add --ignore-workspace-root-check request@2.88.2 moment@2.29.3 undersco
 
 # workaround for wkhtmltopdf installation not running from Dockerfile.local of jsreport/worker
 RUN node /app/node_modules/wkhtmltopdf-installer/lib/install.js
+
+# this part is commented because copying the patches to node_modules/@jsreport/jsreport-core
+# does not work on symlinks, and honestly we don't need this patch for our local testing
+# COPY --chown=jsreport:jsreport patch /app
 
 RUN yarn cache clean --all && rm -rf /tmp/*
 

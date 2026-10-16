@@ -20,7 +20,7 @@ RUN yarn install
 # dependencies used in code
 # (request and moment are needed as part of support for allowed modules
 # inside scripts, helpers)
-RUN yarn add --ignore-workspace-root-check request@2.88.2 moment@2.29.3 underscore@1.13.3
+RUN yarn add --ignore-workspace-root-check request@2.88.2 moment@2.31.0 underscore@1.13.8
 # this part is commented because copying the patches to node_modules/<path>
 # does not work on symlinks (like when target is a package in the monorepo),
 # but since we don't need patch for our local testing, we skip it

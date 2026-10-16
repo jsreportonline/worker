@@ -21,7 +21,7 @@ RUN npm install @jsreport/jsreport-ejs@4.1.0 \
 # dependencies used in code
 # (request and moment are needed as part of support for allowed modules
 # inside scripts, helpers)
-RUN npm install request@2.88.2 moment@2.29.3 underscore@1.13.3
+RUN npm install request@2.88.2 moment@2.31.0 underscore@1.13.8
 
 COPY --chown=jsreport:jsreport patch /app
 
